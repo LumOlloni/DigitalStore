@@ -1,0 +1,79 @@
+#navBarSearchForm input[type=text] {
+    width: 18rem !important;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+#profileBody {
+    margin-bottom: 150px;
+}
+
+
+
+.primaryColor {
+    color: #f4623a;
+}
+
+.hrColor {
+    border: 1px solid #f4623a;
+}
+
+
+.styleButton:hover {
+    background-color: #f4623a;
+    color: #fff;
+
+}
+
+.imageCard {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 0;
+}
+
+.emp-profile {
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.profile-image {
+    text-align: center;
+}
+
+.profile-image img {
+    width: 70%;
+    height: 100%;
+}
+
+.profile-image .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    background: #212529b8;
+}
+
+#bodyFooter {
+    margin-bottom: 200px;
+}
+
+
+.flipped {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
