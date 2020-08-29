@@ -18,14 +18,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $roleName = ['admin' , 'Editor'];
+        $roleName = ['admin', 'Editor'];
 
         $users = User::whereHas('roles', function ($q) use ($roleName) {
             $q->whereIn('name',  $roleName);
         })->get();
 
 
-        return view('adminTemplate.role')->with('users',$users);
+        return view('adminTemplate.role')->with('users', $users);
     }
 
     /**
@@ -34,14 +34,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+    { }
+    public function addAdmin()
     {
-        
-    }
-    public function addAdmin(){
-        $roles = ['admin' , 'Editor'];
-        $role = Role::whereIn('name' ,$roles)->get();
 
-        return view('adminTemplate.addAdmin')->with('role' , $role);
+        $roles = ['admin', 'Editor'];
+        $role = Role::whereIn('name', $roles)->get();
+
+        return view('adminTemplate.addAdmin')->with('role', $role);
     }
 
     /**
@@ -50,29 +50,29 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request )
+    public function store(Request $request)
     {
-         $data = array();
-        $this->validate($request , [
-            'name' => ['required','string', 'max:255'],
-            'username' => ['required','string', 'max:255' , 'unique:users'],
-            'email' => ['required','string', 'email', 'max:255', 'unique:users'],
-            'img' => ['required','mimes:jpeg,jpg,png,gif','max:10000'],
-            'password' => ['required','string', 'min:8'], 
+        $data = array();
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'img' => ['required', 'mimes:jpeg,jpg,png,gif', 'max:10000'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
 
         $fileName = 'null';
         if (Input::file('img')->isValid()) {
             $destinationPath = public_path('images/imgUsers');
             $extension = Input::file('img')->getClientOriginalExtension();
-            $fileName = uniqid().'.'.$extension;
-    
-            Input::file('img')->move($destinationPath, $fileName);   
-          }
+            $fileName = uniqid() . '.' . $extension;
+
+            Input::file('img')->move($destinationPath, $fileName);
+        }
 
         $role = $request->addAdmin;
-        $userRole = Role::where('name', $role)->first();  
-        
+        $userRole = Role::where('name', $role)->first();
+
         $user = new User;
         $password = Input::get('password');
         $hashed = Hash::make($password);
@@ -81,13 +81,12 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password =  $hashed;
         $user->image = $fileName;
-        
+
         $user->save();
 
         $user->roles()->attach($userRole);
 
-        return redirect()->back()->with('success' , 'Role for User created Succefully');
-
+        return redirect()->back()->with('success', 'Role for User created Succefully');
     }
 
     /**
@@ -109,14 +108,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->id == $id){
-            return redirect()->back()->with('warning' , 'Ti nuk mund ti ndryshosh rolet vetes');
+        if (Auth::user()->id == $id) {
+            return redirect()->back()->with('warning', 'Ti nuk mund ti ndryshosh rolet vetes');
         }
-        $roleUser = ['admin' , 'Editor' , 'superadmin'];
-        $roles = Role::whereIn('name' ,$roleUser)->get();
+        $roleUser = ['admin', 'Editor', 'superadmin'];
+        $roles = Role::whereIn('name', $roleUser)->get();
 
 
-        return view('adminTemplate.editAdmin')->with(['user' => User::find($id) , 'roles' => $roles]);
+        return view('adminTemplate.editAdmin')->with(['user' => User::find($id), 'roles' => $roles]);
     }
 
     /**
@@ -128,11 +127,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $user = User::find($id);
+        $user = User::find($id);
 
-       $user->roles()->sync($request->roles);
+        $user->roles()->sync($request->roles);
 
-       return redirect('/menage/roleUsers')->with('success' , 'Rolet e userit u ndryshuan me sukses !!');
+        return redirect('/menage/roleUsers')->with('success', 'Rolet e userit u ndryshuan me sukses !!');
     }
 
     /**

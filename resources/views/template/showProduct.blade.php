@@ -29,7 +29,6 @@
           <input type="hidden" name="categoryName" value="{{$product->category->name}}">
           <button type="submit" class="btn btn-success"><i style="color:aliceblue" style="font-size: 20px;" class="fas fa-shopping-cart"></i> Shto ne Shport</button>
        </form>
-       <button type="button" class="btn btn-warning">Rezervo Produktin</button>
        @else 
          <div class="text-danger">{{$product->name}} nuk eshte ne dispozicion</div> 
        @endif

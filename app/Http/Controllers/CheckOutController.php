@@ -160,6 +160,7 @@ class CheckOutController extends Controller
     }
 
     public function downloadPDF(){
+        
         \PDF::setOptions(['dpi' => 10, 'defaultFont' => 'sans-serif']);
         $userId = auth()->user()->id;
         $query = Payment::where('user_id' , $userId)->orderBy('created_at' , 'DESC')->take(1)->get();
